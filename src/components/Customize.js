@@ -7,8 +7,11 @@ import Mushroom from "../assets/Mushroom.png";
 import Basil from "../assets/Basil.png"
 import Tomato from "../assets/Tomato.png";
 import { motion } from "framer-motion";
+import { useNavigate } from 'react-router-dom';
 
 export default function Customize({ ingredients, setIngredients }) {
+    let navigate = useNavigate();
+
     const onChange = (event, name) => {
         let newIngredients = JSON.parse(JSON.stringify(ingredients));
         newIngredients[name] = event;
@@ -21,14 +24,23 @@ export default function Customize({ ingredients, setIngredients }) {
             <div style={{ border: "2px solid black", flex: 1 }}>Images
                 <div style={{ minHeight: 500, maxWidth: 500, position: "relative" }}>
                     <img src={Base} alt="Pizza Base" className="ingredients"></img>
-                    <img src={Cheese} alt="Pizza Base" className="ingredients"></img>
+                    <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{
+                            scale: ingredients['cheese'] ? 1 : 0,
+                        }}
+                        transition={{ duration: 0.5 }}
+                        className="ingredients"
+                    >
+                        <img src={Cheese} alt="Pizza Base" className="ingredients"></img>
+                    </motion.div>
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{
                             y: ingredients['olive'] ? 100 : -100,
                             opacity: ingredients['olive'] ? 1 : 0,
                         }}
-                        transition={{ duration: 1 }}
+                        transition={{ duration: 0.5 }}
                         className="ingredients clickable-ingredients"
                     >
                         <img src={Olive} alt="Pizza Base" className="ingredients"></img>
@@ -50,7 +62,7 @@ export default function Customize({ ingredients, setIngredients }) {
                             y: ingredients['mushroom'] ? 100 : -100,
                             opacity: ingredients["mushroom"] ? 1 : 0,
                         }}
-                        transition={{ duration: 1 }}
+                        transition={{ duration: 0.5 }}
                         className="ingredients clickable-ingredients"
                     >
                         <img src={Mushroom} alt="Pizza Base" className="ingredients"></img>
@@ -61,7 +73,7 @@ export default function Customize({ ingredients, setIngredients }) {
                             y: ingredients['tomato'] ? 100 : -100,
                             opacity: ingredients["tomato"] ? 1 : 0,
                         }}
-                        transition={{ duration: 1 }}
+                        transition={{ duration: 0.5 }}
                         className="ingredients clickable-ingredients"
                     >
                         <img src={Tomato} alt="Pizza Base" className="ingredients"></img>
@@ -72,7 +84,7 @@ export default function Customize({ ingredients, setIngredients }) {
                             y: ingredients['basil'] ? 100 : -100,
                             opacity: ingredients["basil"] ? 1 : 0,
                         }}
-                        transition={{ duration: 1 }}
+                        transition={{ duration: 0.5 }}
                         className="ingredients clickable-ingredients"
                     >
                         <img src={Basil} alt="Pizza Base" className="ingredients"></img>
@@ -80,6 +92,17 @@ export default function Customize({ ingredients, setIngredients }) {
                 </div>
             </div>
             <div style={{ border: "2px solid black", flex: 1 }}>
+                <label className="container-checkbox">
+                    Cheese
+                    <input
+                        type="checkbox"
+                        checked={ingredients["cheese"]}
+                        onChange={(event) =>
+                            onChange(event.currentTarget.checked, "cheese")
+                        }
+                    ></input>
+                    <span className="checkmark"></span>
+                </label>
                 <label className="container-checkbox">
                     Olive
                     <input
@@ -135,6 +158,12 @@ export default function Customize({ ingredients, setIngredients }) {
                     ></input>
                     <span className="checkmark"></span>
                 </label>
+                <button
+                    type='button'
+                    onClick={() => navigate("/checkout", { ingredients })}
+                >
+                    Proeceed to checkout
+                </button>
             </div>
             {JSON.stringify(ingredients)}
         </div>

@@ -29,7 +29,7 @@ function App() {
           setIngredients={setIngredients}
           ></Customize>}>
           </Route>
-          <Route exact path="/checkout" element={<Checkout></Checkout>}>
+          <Route exact path="/checkout" element={<Checkout ingredients={ingredients}></Checkout>}>
           </Route>
           <Route exact path="/customize" element={<Customize ingredients={ingredients}></Customize>}>
           </Route>
