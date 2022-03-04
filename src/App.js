@@ -12,7 +12,6 @@ import {
 function App() {
   const [ingredients, setIngredients] = useState
   ({
-    onions: false,
     basil: false,
     cheese: false,
     mushroom: false,
@@ -25,7 +24,10 @@ function App() {
       <Header></Header>
       <Router>
         <Routes>
-          <Route exact path="/" element={<Customize ingredients={ingredients}></Customize>}>
+          <Route exact path="/" element={<Customize 
+          ingredients={ingredients}
+          setIngredients={setIngredients}
+          ></Customize>}>
           </Route>
           <Route exact path="/checkout" element={<Checkout></Checkout>}>
           </Route>
